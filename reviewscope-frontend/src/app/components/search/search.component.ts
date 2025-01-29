@@ -13,7 +13,9 @@ export class SearchComponent {
   searchQuery: string = '';
 
   searchBusiness() {
-    // Placeholder for now
-    console.log('Searching for:', this.searchQuery);
+    if (this.searchQuery.trim()) {
+      console.log('Searching for:', this.searchQuery);
+      // Add API call here later
+    }
   }
 }

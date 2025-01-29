@@ -1,1 +1,14 @@
-<p>search works!</p>
+<div class="search-container">
+  <p class="description">
+    Enter a business name to analyze its Google Reviews using AI
+  </p>
+  <div class="search-box">
+    <input 
+      type="text" 
+      [(ngModel)]="searchQuery" 
+      placeholder="Enter business name..."
+      (keyup.enter)="searchBusiness()"
+    >
+    <button (click)="searchBusiness()">Analyze</button>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+.app-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e1e2e 0%, #2d2b42 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.content-wrapper {
+  background: rgba(30, 30, 46, 0.8);
+  border-radius: 20px;
+  padding: 40px;
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: white;
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 2.5rem;
+}
+
+.subtitle {
+  color: #a9a9c0;
+  text-align: center;
+  margin-bottom: 30px;
+}
