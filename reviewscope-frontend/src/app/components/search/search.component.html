@@ -1,16 +1,68 @@
 <div class="search-container">
-  <h1>ReviewScope</h1>
-  <p class="subtitle">AI-Powered Business Review Analysis</p>
   <p class="description">
     Enter a business name to analyze its Google Reviews using AI
   </p>
   <div class="search-box">
     <input 
       #searchInput
-      type="text" 
       [(ngModel)]="searchQuery" 
       placeholder="Search for a business..."
+      (keyup.enter)="analyzeBusiness()"
     >
     <button (click)="analyzeBusiness()">Analyze</button>
   </div>
+  
+  <!-- Debug info -->
+  <div *ngIf="selectedBusiness">
+    <p>Debug - Rating: {{selectedBusiness.rating}}</p>
+  </div>
+
+  <div class="business-info" *ngIf="selectedBusiness && selectedBusiness.rating > 0">
+    <div class="rating">
+      <span class="stars">
+        <span class="empty-stars">☆☆☆☆☆</span>
+        <span class="filled-stars" [style.width.%]="(selectedBusiness.rating / 5) * 100">★★★★★</span>
+      </span>
+      <span class="rating-text">
+        {{selectedBusiness.rating.toFixed(1)}} out of 5 ({{selectedBusiness.totalRatings}} reviews)
+      </span>
+    </div>
+  </div>
 </div>
+
+<style>
+.business-info {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stars {
+  position: relative;
+  display: inline-block;
+  font-size: 24px;
+}
+
+.empty-stars {
+  color: #ddd;
+}
+
+.filled-stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  color: #ffd700;
+}
+
+.rating-text {
+  font-size: 16px;
+  color: #666;
+}
+</style>
