@@ -12,10 +12,6 @@
     <button (click)="analyzeBusiness()">Analyze</button>
   </div>
   
-  <!-- Debug info -->
-  <div *ngIf="selectedBusiness">
-    <p>Debug - Rating: {{selectedBusiness.rating}}</p>
-  </div>
 
   <div class="business-info" *ngIf="selectedBusiness && selectedBusiness.rating > 0">
     <div class="rating">
