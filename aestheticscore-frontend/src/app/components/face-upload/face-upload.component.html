@@ -1,6 +1,6 @@
 <div class="upload-container">
   <p class="description">
-    Upload a face photo to analyze its aesthetic features
+    Upload a face photo to analyze its aesthetic score
   </p>
   
   <!-- File upload area -->
@@ -24,6 +24,19 @@
   <!-- Preview area -->
   <div class="preview" *ngIf="selectedImage">
     <img [src]="selectedImage" alt="Selected face">
-    <button (click)="analyzeImage()">Analyze Face</button>
+    <button (click)="analyzeImage()" [disabled]="isLoading">
+      {{ isLoading ? 'Analyzing...' : 'Analyze Face' }}
+    </button>
+
+    <!-- Score display -->
+    <div class="score-display" *ngIf="beautyScore !== null">
+      <h3>Beauty Score</h3>
+      <div class="score">{{ beautyScore.toFixed(1) }} / 5.0</div>
+    </div>
+  </div>
+
+  <!-- Loading spinner -->
+  <div class="loading-spinner" *ngIf="isLoading">
+    <div class="spinner"></div>
   </div>
 </div> 

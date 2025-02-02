@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-face-upload',
@@ -11,6 +12,11 @@ import { CommonModule } from '@angular/common';
 export class FaceUploadComponent {
   isDragging = false;
   selectedImage: string | null = null;
+  selectedFile: File | null = null;
+  beautyScore: number | null = null;
+  isLoading = false;
+
+  constructor(private http: HttpClient) {}
 
   onDragOver(event: DragEvent) {
     event.preventDefault();
@@ -36,6 +42,7 @@ export class FaceUploadComponent {
 
   handleFile(file: File) {
     if (file.type.startsWith('image/')) {
+      this.selectedFile = file;
       const reader = new FileReader();
       reader.onload = (e) => {
         this.selectedImage = e.target?.result as string;
@@ -47,9 +54,23 @@ export class FaceUploadComponent {
   }
 
   analyzeImage() {
-    if (this.selectedImage) {
-      // TODO: Add your face analysis logic here
-      console.log('Analyzing image...');
+    if (this.selectedFile) {
+      this.isLoading = true;
+      const formData = new FormData();
+      formData.append('file', this.selectedFile);
+
+      this.http.post<{beauty_score: number}>('http://localhost:8000/predict', formData)
+        .subscribe({
+          next: (response) => {
+            this.beautyScore = response.beauty_score;
+            this.isLoading = false;
+          },
+          error: (error) => {
+            console.error('Error analyzing image:', error);
+            this.isLoading = false;
+            alert('Error analyzing image. Please try again.');
+          }
+        });
     }
   }
 } 

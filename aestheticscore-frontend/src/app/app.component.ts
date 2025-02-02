@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FaceUploadComponent } from './components/face-upload/face-upload.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +8,8 @@ import { FaceUploadComponent } from './components/face-upload/face-upload.compon
   styleUrls: ['./app.component.css'],
   standalone: true,  
   imports: [
-    FaceUploadComponent
+    FaceUploadComponent,
+    HttpClientModule
   ]
 })
 export class AppComponent {
