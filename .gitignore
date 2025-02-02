@@ -56,8 +56,10 @@ Thumbs.db
 .env.development.local
 .env.test.local
 .env.production.local
-reviewscope-frontend/src/environments/environment.ts
-reviewscope-frontend/src/environments/environment.prod.ts
+aestheticscore-frontend/src/environments/environment.ts
+aestheticscore-frontend/src/environments/environment.prod.ts
+
+aestheticscore-backend/src/machine_learning/dataset
 
 # Logs
 logs
