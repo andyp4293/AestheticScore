@@ -45,7 +45,7 @@ def create_dataloaders(
     transform = transforms.Compose(
         [
             transforms.ToPILImage(),
-            transforms.Resize((224, 224)),  # ResNet input size
+            transforms.Resize((350, 350)),  # ResNet input size
             transforms.RandomHorizontalFlip(),
             transforms.RandomRotation(10),
             transforms.ToTensor(),
