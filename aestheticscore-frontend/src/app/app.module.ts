@@ -7,14 +7,10 @@ import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SearchComponent } from './components/search/search.component';
-import { ResultsComponent } from './components/results/results.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SearchComponent,
-    ResultsComponent
   ],
   imports: [
     BrowserModule,

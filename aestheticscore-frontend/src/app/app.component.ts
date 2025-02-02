@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
+import { FaceUploadComponent } from './components/face-upload/face-upload.component';
 
 @Component({
   selector: 'app-root',
-  standalone: false,
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  standalone: true,  
+  imports: [
+    FaceUploadComponent
+  ]
 })
 export class AppComponent {
-  currentAnalysis: any = null;
-
-  updateResults(results: any) {
-    this.currentAnalysis = results;
-  }
+  title = 'AestheticScore';
 }

@@ -1,0 +1,29 @@
+<div class="upload-container">
+  <p class="description">
+    Upload a face photo to analyze its aesthetic features
+  </p>
+  
+  <!-- File upload area -->
+  <div class="upload-area" 
+       (dragover)="onDragOver($event)" 
+       (drop)="onDrop($event)"
+       [class.dragging]="isDragging">
+    
+    <input type="file" 
+           #fileInput 
+           (change)="onFileSelected($event)"
+           accept="image/*"
+           style="display: none">
+    
+    <div class="upload-content">
+      <button (click)="fileInput.click()">Choose Photo</button>
+      <p>or drag and drop your photo here</p>
+    </div>
+  </div>
+
+  <!-- Preview area -->
+  <div class="preview" *ngIf="selectedImage">
+    <img [src]="selectedImage" alt="Selected face">
+    <button (click)="analyzeImage()">Analyze Face</button>
+  </div>
+</div> 
