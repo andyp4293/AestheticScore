@@ -1,11 +1,15 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-from typing import List, Optional
+import torch
 
-app = FastAPI(title="ReviewScope API")
+from src.machine_learning.ml_model import BeautyScoreModel  # Import your model
+import torchvision.transforms as transforms
+from PIL import Image
+import io
 
-# Configure CORS
+app = FastAPI()
+
+# Your existing CORS setup
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:4200"],
@@ -14,33 +18,31 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-class BusinessRequest(BaseModel):
-    query: str
+# Load model
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model = BeautyScoreModel().to(device)
+model.load_state_dict(torch.load('src/machine_learning/scut_fbp_model.pt', map_location=device))
+model.eval()
 
-class ReviewAnalysis(BaseModel):
-    summary: str
-    pros: List[str]
-    cons: List[str]
-    rating: Optional[float]
+# Define transform
+transform = transforms.Compose([
+    transforms.Resize((350, 350)),
+    transforms.ToTensor(),
+    transforms.Normalize(mean=[0.485, 0.456, 0.406], 
+                       std=[0.229, 0.224, 0.225])
+])
 
-@app.get("/")
-async def root():
-    return {"message": "Welcome to ReviewScope API"}
 
-@app.post("/api/analyze-business")
-async def analyze_business(request: BusinessRequest):
-    try:
-        # Simulated analysis result
-        analysis = ReviewAnalysis(
-            summary="This is a sample business with good service but higher prices.",
-            pros=["Excellent customer service", "Clean environment", "Quality products"],
-            cons=["Slightly expensive", "Limited parking"],
-            rating=4.2
-        )
+
+# Add new predict endpoint
+@app.post("/predict")
+async def predict_beauty_score(file: UploadFile = File(...)):
+    contents = await file.read()
+    image = Image.open(io.BytesIO(contents)).convert('RGB')
+    
+    image_tensor = transform(image).unsqueeze(0).to(device)
+    
+    with torch.no_grad():
+        score = model(image_tensor)
         
-        return {
-            "business_name": request.query,
-            "analysis": analysis
-        }
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    return {"beauty_score": float(score[0][0])} 
