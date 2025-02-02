@@ -14,7 +14,7 @@ MODEL_SAVE_PATH = "src/machine_learning/scut_fbp_model.pt"
 
 # Hyperparameters
 BATCH_SIZE = 16
-NUM_EPOCHS = 5
+NUM_EPOCHS = 15
 LR = 1e-4
 TRAIN_SPLIT = 0.8
 
