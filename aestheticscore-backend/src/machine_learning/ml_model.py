@@ -8,15 +8,15 @@ class BeautyScoreModel(nn.Module):
         for param in base_model.parameters():
             param.requires_grad = False  # Freeze base model layers
 
-        # Replace final layer for regression
         in_features = base_model.fc.in_features
         base_model.fc = nn.Sequential(
             nn.Linear(in_features, 128),
             nn.ReLU(),
             nn.Dropout(0.2),
-            nn.Linear(128, 1)  # Output a single float value
+            nn.Linear(128, 1),
+            nn.Sigmoid()  # Ensures output is between 0 and 1
         )
         self.model = base_model
 
     def forward(self, x):
-        return self.model(x)
+        return self.model(x) * 4 + 1  # Rescale output to [1,5]
