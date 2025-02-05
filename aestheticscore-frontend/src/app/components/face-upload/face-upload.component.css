@@ -10,11 +10,33 @@
 }
 
 .upload-area {
-  border: 2px dashed #ccc;
-  border-radius: 8px;
-  padding: 2rem;
+  border: 2px dashed #888888;
+  border-radius: 16px;
+  padding: 1.5rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease-in-out;
+  text-align: center;
+  background-color: #1c1e26;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 150px;
+  max-width: 400px;
+  margin: auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.upload-area:hover {
+  background-color: #23262f;
+  border-color: #aaaaaa;
+}
+
+.upload-area:active {
+  background-color: #2c303b;
 }
 
 .upload-area.dragging {
