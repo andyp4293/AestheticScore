@@ -9,7 +9,7 @@ import io
 
 app = FastAPI()
 
-# Your existing CORS setup
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:4200"],
