@@ -5,8 +5,14 @@
 }
 
 .description {
-  margin-bottom: 2rem;
   color: white;
+  margin-bottom: 2rem; 
+}
+
+.disclaimer {
+  color: white;
+  margin-top: 1rem;
+  font-size: 0.6rem; 
 }
 
 .upload-area {
