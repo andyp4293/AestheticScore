@@ -41,12 +41,26 @@ export class FaceUploadComponent { // creates a class for our component
     }
   }
 
-  handleFile(file: File) { // event handler
+  handleFile(file: File) {
     if (file.type.startsWith('image/')) { // checks if the file is an image
       this.selectedFile = file; // sets the selectedFile property to the file 
       const reader = new FileReader(); 
-      reader.onload = (e) => { // this funs when reader.readAsDataURL is loaded
-        this.selectedImage = e.target?.result as string; // sets selected image as a base64 string for the user to preview the image
+      reader.onload = (e) => { // this runs when reader.readAsDataURL is loaded
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          if (ctx) {
+            const size = Math.min(img.width, img.height); // get the smallest dimension
+            canvas.width = size;
+            canvas.height = size;
+            const offsetX = (img.width - size) / 2;
+            const offsetY = (img.height - size) / 2;
+            ctx.drawImage(img, offsetX, offsetY, size, size, 0, 0, size, size);
+            this.selectedImage = canvas.toDataURL('image/jpeg'); // sets selected image as a base64 string for the user to preview the image
+          }
+        };
+        img.src = e.target?.result as string;
       };
       reader.readAsDataURL(file);
     } else {
