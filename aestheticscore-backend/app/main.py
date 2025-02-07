@@ -6,13 +6,15 @@ from src.machine_learning.ml_model import BeautyScoreModel  # Import your model
 import torchvision.transforms as transforms
 from PIL import Image
 import io
+from decouple import config
 
 app = FastAPI()
 
+frontendUrl = config('frontendUrl')
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4200"],
+    allow_origins=[frontendUrl],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

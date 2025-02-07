@@ -1,6 +1,8 @@
 import { Component } from '@angular/core'; // necessary for creating components
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment'; 
+
 
 // @Component is a decorator that tells a class to behave as a component
 @Component({
@@ -75,7 +77,7 @@ export class FaceUploadComponent { // creates a class for our component
       const formData = new FormData(); // form data object to send files through http 
       formData.append('file', this.selectedFile);
 
-      this.http.post<{beauty_score: number}>('http://localhost:8000/predict', formData)
+      this.http.post<{beauty_score: number}>(`${environment.backendUrl}/predict`, formData)
         .subscribe({
           next: (response) => {
             this.beautyScore = response.beauty_score;
