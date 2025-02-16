@@ -1,21 +1,20 @@
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 import torch
-
-from src.machine_learning.ml_model import BeautyScoreModel  # Import your model
 import torchvision.transforms as transforms
 from PIL import Image
 import io
-from decouple import config
+
+from src.machine_learning.ml_model import BeautyScoreModel  # Import your model
 
 app = FastAPI()
 
-# Explicitly allow Netlify frontend
-frontendUrl = "https://aestheticscore.netlify.app"
+# Set your Fly.io app domain (Replace with your actual Fly.io domain)
+backendUrl = "https://aestheticscore-backend-little-sound-3241.fly.dev"
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[frontendUrl],
+    allow_origins=[backendUrl, "https://aestheticscore.netlify.app"],  # Allow Netlify frontend
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -37,9 +36,8 @@ transform = transforms.Compose([
 
 @app.get("/")
 def read_root():
-    return {"message": "FastAPI server is running!"}
+    return {"message": "FastAPI server is running on Fly.io with HTTPS!"}
 
-# Add new predict endpoint
 @app.post("/predict")
 async def predict_beauty_score(file: UploadFile = File(...)):
     contents = await file.read()
