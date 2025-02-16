@@ -49,3 +49,9 @@ async def predict_beauty_score(file: UploadFile = File(...)):
         score = model(image_tensor)
         
     return {"beauty_score": float(score[0][0])}
+
+
+import uvicorn
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
