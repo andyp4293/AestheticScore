@@ -35,6 +35,10 @@ transform = transforms.Compose([
 ])
 
 
+@app.get("/")
+def read_root():
+    return {"message": "FastAPI server is running!"}
+
 
 # Add new predict endpoint
 @app.post("/predict")
