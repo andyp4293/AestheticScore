@@ -10,7 +10,8 @@ from decouple import config
 
 app = FastAPI()
 
-frontendUrl = config('frontendUrl')
+# Explicitly allow Netlify frontend
+frontendUrl = "https://aestheticscore.netlify.app"
 
 app.add_middleware(
     CORSMiddleware,
@@ -31,14 +32,12 @@ transform = transforms.Compose([
     transforms.Resize((350, 350)),
     transforms.ToTensor(),
     transforms.Normalize(mean=[0.485, 0.456, 0.406], 
-                       std=[0.229, 0.224, 0.225])
+                         std=[0.229, 0.224, 0.225])
 ])
-
 
 @app.get("/")
 def read_root():
     return {"message": "FastAPI server is running!"}
-
 
 # Add new predict endpoint
 @app.post("/predict")
@@ -51,4 +50,4 @@ async def predict_beauty_score(file: UploadFile = File(...)):
     with torch.no_grad():
         score = model(image_tensor)
         
-    return {"beauty_score": float(score[0][0])} 
+    return {"beauty_score": float(score[0][0])}
