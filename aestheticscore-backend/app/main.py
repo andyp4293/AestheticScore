@@ -9,12 +9,12 @@ from src.machine_learning.ml_model import BeautyScoreModel  # Import your model
 
 app = FastAPI()
 
-# Set your Fly.io app domain (Replace with your actual Fly.io domain)
-backendUrl = "https://aestheticscore-backend-little-sound-3241.fly.dev"
+# Remove Fly.io backend URL if you don't need it anymore
+# Instead, you can leave the frontend domain or any origins that will access your API.
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[backendUrl, "https://aestheticscore.netlify.app"],  # Allow Netlify frontend
+    allow_origins=["https://aestheticscore.netlify.app"],  # Only allow your frontend if necessary
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -36,7 +36,7 @@ transform = transforms.Compose([
 
 @app.get("/")
 def read_root():
-    return {"message": "FastAPI server is running on Fly.io with HTTPS!"}
+    return {"message": "FastAPI server is running with HTTPS!"}
 
 @app.post("/predict")
 async def predict_beauty_score(file: UploadFile = File(...)):
