@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  backendUrl: 'https://aestheticscore-backend-little-sound-3241.fly.dev'
+  backendUrl: 'https://3.138.119.162:8000/'
 };
