@@ -14,7 +14,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://aestheticscore.netlify.app"],  # Only allow your frontend if necessary
+    allow_origins=["*"],  # Change "*" to your frontend URL once confirmed working
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
